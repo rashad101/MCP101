@@ -29,5 +29,4 @@ async def run_sse():
             print("Resource read result: ", result)
 
 if __name__ == "__main__":
-
     asyncio.run(run_sse())
