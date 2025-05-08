@@ -1,17 +1,17 @@
 import asyncio
-
 from mcp import ClientSession, StdioServerParameters, types
 from mcp.client.stdio import stdio_client
 
 # initialize server params for stdio connection
+# we dont have to spin the server separately. The following code will take care of that
 server_params = StdioServerParameters(
     command="python",
-    args=["server.py"],
+    args=["server_stdio.py"],
     env=None,  # environment variables
 )
 
 
-async def stdio_protocol():
+async def run_stdio():
     async with stdio_client(server_params) as (read, write):
         async with ClientSession(read, write) as session:
 
@@ -37,4 +37,5 @@ async def stdio_protocol():
             print("Resource read result: ", result)
 
 if __name__ == "__main__":
-    asyncio.run(stdio_protocol())
+
+    asyncio.run(run_stdio())

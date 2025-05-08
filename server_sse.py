@@ -1,20 +1,23 @@
-from mcp.server.fastmcp import FastMCP
+from mcp.server import FastMCP
 
-# Creating the MCP server
-mcp = FastMCP("Test Server")
 
-# decorator for creating a tool
-@mcp.tool()
+mcp_sse = FastMCP(
+    name="SSE Test Server",
+    host="0.0.0.0",
+    port="7070")
+
+
+@mcp_sse.tool()
 def username(firstname: str, lastname: str) -> str:
     "Return the complete username"
     return f"Hello {firstname} {lastname}"
 
 
 # adding custom resource
-@mcp.resource("file://data/testfile")
+@mcp_sse.resource("file://data/testfile")
 def custom_resource() -> str:
     return f"Hello test file"
 
 
 if __name__ == "__main__":
-    mcp.run()
+    mcp_sse.run(transport="sse")
